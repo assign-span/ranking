@@ -39,12 +39,13 @@ def process_line(line):
         return {}
     partial_results = line.split(", ")
     scores = [get_score(x) for x in partial_results]
+    teams = [get_team_name(x) for x in partial_results]
     if (scores[0] > scores[1]):
-        return {get_team_name(partial_results[0]): 3}
+        return {teams[0]: 3, teams[1]: 0}
     elif (scores[0] < scores[1]):
-        return {get_team_name(partial_results[1]): 3}
+        return {teams[0]: 0, teams[1]: 3}
     else:
-        return {get_team_name(x): 1 for x in partial_results}
+        return {teams[0]: 1, teams[1]: 1}
 
 
 def rank(input_file=sys.stdin, output_file=sys.stdout):
