@@ -2,6 +2,7 @@
 
 import sys
 
+
 def get_score(team_str):
     """
     Get score from partial result string
@@ -35,9 +36,9 @@ def process_line(line):
     partial_results = line.split(", ")
     scores = [get_score(x) for x in partial_results]
     teams = [get_team_name(x) for x in partial_results]
-    if (scores[0] > scores[1]):
+    if scores[0] > scores[1]:
         return {teams[0]: 3, teams[1]: 0}
-    elif (scores[0] < scores[1]):
+    elif scores[0] < scores[1]:
         return {teams[0]: 0, teams[1]: 3}
     else:
         return {teams[0]: 1, teams[1]: 1}
@@ -78,7 +79,7 @@ def rank(input_file=sys.stdin, output_file=sys.stdout):
     """
     points = {}
     for line in input_file:
-        results = process_line(line.rstrip()) #trim newline character(s)
+        results = process_line(line.rstrip())  # trim newline character(s)
         for key in results:
                 points[key] = points.get(key, 0) + results[key]
     print_sorted(output_file, points)
