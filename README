@@ -12,3 +12,8 @@ To install dependencies:
 The application accepts input on STDIN and prints to STDOUT. Console
 input/output redirection may be used, e.g.
 $ python <fixtures.txt >output.txt
+
+3. TESTING
+-----------
+To execute tests, user the 'nosetests' command while in the project folder
+
