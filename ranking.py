@@ -43,6 +43,17 @@ def process_result(result):
     else:
         return {teams[0]: 1, teams[1]: 1}
 
+def _pluralize(num):
+    """
+    Optionally pluralize pt/pts
+    :param num: number of points
+    :return: 'pt' if num is 1, else 'pts'
+    """
+    if num == 1:
+        return "pt"
+    else:
+        return "pts"
+
 
 def print_sorted(output_file, results):
     """
@@ -57,23 +68,12 @@ def print_sorted(output_file, results):
     displayed_position = 0
     logical_position = 0
 
-    def pluralize(num):
-        """
-        Optionally pluralize pt/pts
-        :param num: number of points
-        :return: 'pt' if num is 1, else 'pts'
-        """
-        if num == 1:
-            return "pt"
-        else:
-            return "pts"
-
     for team_name, team_points in s:
         logical_position += 1
         if last_points != team_points:
             displayed_position = logical_position
             last_points = team_points
-        output_file.write("{}. {}, {} {}\n".format(displayed_position, team_name, team_points, pluralize(team_points)))
+        output_file.write("{}. {}, {} {}\n".format(displayed_position, team_name, team_points, _pluralize(team_points)))
 
 
 def rank(input_file=sys.stdin, output_file=sys.stdout):
