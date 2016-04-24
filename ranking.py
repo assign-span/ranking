@@ -2,11 +2,6 @@
 
 import sys
 
-from pprint import pprint
-
-points = {}
-
-
 def get_score(team_str):
     """
     Get score from partial result string
@@ -48,6 +43,32 @@ def process_line(line):
         return {teams[0]: 1, teams[1]: 1}
 
 
+def print_sorted(output_file, results):
+    s = sorted(results.items(), key=lambda x: x[0])
+    s = sorted(s, key=lambda x: x[1], reverse=True)
+    last_points = None
+    displayed_position = 0
+    logical_position = 0
+
+    def pluralize(num):
+        """
+        Optionally pluralize pt/pts
+        :param num: number of points
+        :return: 'pt' if num is 1, else 'pts'
+        """
+        if num == 1:
+            return "pt"
+        else:
+            return "pts"
+
+    for team_name, team_points in s:
+        logical_position += 1
+        if last_points != team_points:
+            displayed_position = logical_position
+            last_points = team_points
+        output_file.write("{}. {}, {} {}\n".format(displayed_position, team_name, team_points, pluralize(team_points)))
+
+
 def rank(input_file=sys.stdin, output_file=sys.stdout):
     """
     Process rankings
@@ -60,8 +81,7 @@ def rank(input_file=sys.stdin, output_file=sys.stdout):
         results = process_line(line.rstrip()) #trim newline character(s)
         for key in results:
                 points[key] = points.get(key, 0) + results[key]
-
-    pprint(points)
+    print_sorted(output_file, points)
 
 if __name__ == "__main__":
     rank()
