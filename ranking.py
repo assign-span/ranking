@@ -45,6 +45,12 @@ def process_line(line):
 
 
 def print_sorted(output_file, results):
+    """
+    print sorted results to given output file stream
+    :param output_file: file pointer to output filestream
+    :param results: points dict in {team_name: points} format
+    :return: None
+    """
     s = sorted(results.items(), key=lambda x: x[0])
     s = sorted(s, key=lambda x: x[1], reverse=True)
     last_points = None
