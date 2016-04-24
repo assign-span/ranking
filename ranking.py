@@ -25,15 +25,15 @@ def get_team_name(team_str):
     return team_name
 
 
-def process_line(line):
+def process_result(result):
     """
     Process a line of results
-    :param line:
+    :param result:
     :return: dict representing point distribution. key is team name, value is the number of points
     """
-    if not line:  # cater for files that end with newlines (effectively blank)
+    if not result:  # cater for files that end with newlines (effectively blank)
         return {}
-    partial_results = line.split(", ")
+    partial_results = result.split(", ")
     scores = [get_score(x) for x in partial_results]
     teams = [get_team_name(x) for x in partial_results]
     if scores[0] > scores[1]:
@@ -85,7 +85,7 @@ def rank(input_file=sys.stdin, output_file=sys.stdout):
     """
     points = {}
     for line in input_file:
-        results = process_line(line.rstrip())  # trim newline character(s)
+        results = process_result(line.rstrip())  # trim newline character(s)
         for key in results:
                 points[key] = points.get(key, 0) + results[key]
     print_sorted(output_file, points)
